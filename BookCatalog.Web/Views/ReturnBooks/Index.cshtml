@@ -1,0 +1,44 @@
+﻿@model IEnumerable<BooksCatalog.Common.ReturnBook>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Returned Books</h2>
+<br />
+
+@using (Html.BeginForm("Search", "ReturnBooks"))
+{
+    <input type="text" name="returnedBook" value="" placeholder="Date of Return" />
+    <input class="btn btn-primary" type="submit" name="search" value="Search" />
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IssueID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfReturn)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssueID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfReturn)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ReturnID }) |
+                @*@Html.ActionLink("Details", "Details", new { id=item.ReturnID }) |*@
+                @Html.ActionLink("Delete", "Delete", new { id = item.ReturnID })
+            </td>
+        </tr>
+    }
+
+</table>

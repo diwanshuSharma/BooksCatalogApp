@@ -1,0 +1,63 @@
+﻿@model IEnumerable<BooksCatalog.Common.Book>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>All Books</h2><br />
+
+@using (Html.BeginForm("Search", "BooksCatalog"))
+{
+    <input type="text" name="book" value="" placeholder="Book or Author Name"/>
+    <input class="btn btn-primary" type="submit" name="search" value="Search" />
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BookName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ISBN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ISBN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Author)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.BookID }) |
+            @* @Html.ActionLink("Details", "Details", new { id=item.BookID }) |*@
+            @Html.ActionLink("Delete", "Delete", new { id = item.BookID })
+            
+            @using (Html.BeginForm("IssueBook", "IssueBooks", new { id = item.BookID }))
+            {
+                <input class="btn btn-default" type="submit" value="Issue Book"/>
+            }
+
+        </td>
+    </tr>
+}
+
+</table>

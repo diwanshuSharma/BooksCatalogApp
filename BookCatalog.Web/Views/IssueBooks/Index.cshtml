@@ -1,0 +1,62 @@
+﻿@model IEnumerable<BooksCatalog.Common.IssueBook>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Issued Books</h2>
+<br />
+
+@using (Html.BeginForm("Search", "IssueBooks"))
+{
+    <input type="text" name="issuedBook" value="" placeholder="Membership Name or Date of Issue" />
+    <input class="btn btn-primary" type="submit" name="search" value="Search" />
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BookID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfIssue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReturnDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MembershipName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfIssue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReturnDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MembershipName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.IssueID }) |
+                @*@Html.ActionLink("Details", "Details", new { id=item.IssueID }) | *@
+                @Html.ActionLink("Delete", "Delete", new { id = item.IssueID })
+
+                @using (Html.BeginForm("ReturnBook", "ReturnBooks", new { issueId = item.IssueID }))
+                {
+                    <input class="btn btn-default" type="submit" value="Return Book" />
+                }
+
+            </td>
+        </tr>
+    }
+
+</table>
